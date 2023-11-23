@@ -1,8 +1,11 @@
 package com.example.globalsolution.service;
 
+import com.example.globalsolution.entity.HospitalClinica;
 import com.example.globalsolution.entity.Medico;
 import com.example.globalsolution.exception.MedicoNotFoundException;
+import com.example.globalsolution.repository.HospitalClinicaRepository;
 import com.example.globalsolution.repository.MedicoRepository;
+import com.example.globalsolution.service.dto.MedicoCadastroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +17,24 @@ public class MedicoService {
     @Autowired
     private MedicoRepository medicoRepository;
 
-    public Medico createMedico(Medico medico) {
+    @Autowired
+    private HospitalClinicaRepository hospitalRepository;
+
+    public Medico createMedico(MedicoCadastroDTO medicoDTO) {
+        HospitalClinica hospital = new HospitalClinica();
+        hospital.setNomeHospital(medicoDTO.getNomeHospital());
+        hospital.setTelefone(medicoDTO.getTelefoneHospital());
+        hospital.setLatitude(medicoDTO.getLatitude());
+        hospital.setLongitude(medicoDTO.getLongitude());
+
+        hospital = hospitalRepository.save(hospital);
+
+        Medico medico = new Medico();
+        medico.setNomeMedico(medicoDTO.getNomeMedico());
+        medico.setEspecialidade(medicoDTO.getEspecialidade());
+        medico.setCrm(medicoDTO.getCrm());
+        medico.setHospital(hospital);
+
         return medicoRepository.save(medico);
     }
 

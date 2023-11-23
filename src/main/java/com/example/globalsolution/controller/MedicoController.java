@@ -2,6 +2,7 @@ package com.example.globalsolution.controller;
 
 import com.example.globalsolution.entity.Medico;
 import com.example.globalsolution.service.MedicoService;
+import com.example.globalsolution.service.dto.MedicoCadastroDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class MedicoController {
     private MedicoService medicoService;
 
     @PostMapping
-    public ResponseEntity<Medico> createMedico(@RequestBody Medico medico) {
-        return ResponseEntity.ok(medicoService.createMedico(medico));
+    public ResponseEntity<Medico> createMedico(@RequestBody MedicoCadastroDTO medicoDTO) {
+        return ResponseEntity.ok(medicoService.createMedico(medicoDTO));
     }
 
     @PutMapping("/{id}")
